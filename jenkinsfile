@@ -3,15 +3,7 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                script {
-                    def buildResult = sh(script: 'echo "Simulating build step" && exit 0', returnStatus: true)
-                    // Output messages based on the build result
-                    if (buildResult == 0) {
-                        echo 'Build succeeded.'
-                    } else {
-                        echo 'Build failed.'
-                    }
-                }
+                echo "Build Success!"
             }
             post{
                 success{
