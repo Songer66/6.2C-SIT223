@@ -46,7 +46,7 @@ pipeline{
                 echo "ansible-playbook deploy-staging.yml"
             }
         }
-        stage("Deploy to Staging"){
+        stage("Integration Tests on Staging"){
             steps{
                 echo "cypress run --env staging"
             }
