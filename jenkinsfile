@@ -3,29 +3,57 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                echo "Building..."
+                script {
+                    def buildResult = sh(script: 'echo "Simulating build step" && exit 0', returnStatus: true)
+                    // Output messages based on the build result
+                    if (buildResult == 0) {
+                        echo 'Build succeeded.'
+                    } else {
+                        echo 'Build failed.'
+                    }
+                }
             }
             post{
-                always{
+                success{
                     mail to: "songerforever66@gmail.com",
-                    subject: "Build Status Email",
-                    body: "Build was successful!"
+                    subject: "Pipeline Status: SUCCESS",
+                    body: "The Jenkins pipeline has completed successfully."
+                }
+                failure{
+                    mail to: "songerforever66@gmail.com",
+                    subject: "Pipeline Status: FAILURE",
+                    body: "The Jenkins pipeline has failed. Please check the logs for details."
                 }
             }
         }
-        stage("Test"){
+        stage("Unit and Integration Tests"){
             steps{
-                echo "Testing ..."
+                echo "mvn test"
             }
         }
-        stage("Deploy"){
+        stage("Code Analysis"){
             steps{
-                echo "Deploying ..."
+                echo "sonar-scanner"
             }
         }
-        stage("Complete"){
+        stage("Security Scan"){
             steps{
-                echo "Completed."
+                echo "owasp-zap -scan https://your-app-url"
+            }
+        }
+        stage("Deploy to Staging"){
+            steps{
+                echo "ansible-playbook deploy-staging.yml"
+            }
+        }
+        stage("Deploy to Staging"){
+            steps{
+                echo "cypress run --env staging"
+            }
+        }
+        stage("Deploy to Staging"){
+            steps{
+                echo "ansible-playbook deploy-production.yml"
             }
         }
 }
