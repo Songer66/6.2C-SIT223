@@ -51,7 +51,7 @@ pipeline{
                 echo "cypress run --env staging"
             }
         }
-        stage("Deploy to Staging"){
+        stage("Deploy to Production"){
             steps{
                 echo "ansible-playbook deploy-production.yml"
             }
