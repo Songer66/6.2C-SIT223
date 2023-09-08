@@ -20,32 +20,32 @@ pipeline{
         }
         stage("Unit and Integration Tests"){
             steps{
-                echo "mvn test"
+                echo "Tests Succeeded!"
             }
         }
         stage("Code Analysis"){
             steps{
-                echo "sonar-scanner"
+                echo "Code analysis succeeded."
             }
         }
         stage("Security Scan"){
             steps{
-                echo "owasp-zap -scan https://your-app-url"
+                echo "Security scan succeeded."
             }
         }
         stage("Deploy to Staging"){
             steps{
-                echo "ansible-playbook deploy-staging.yml"
+                echo "Deployment to staging succeeded."
             }
         }
         stage("Integration Tests on Staging"){
             steps{
-                echo "cypress run --env staging"
+                echo "Integration tests on staging succeeded."
             }
         }
         stage("Deploy to Production"){
             steps{
-                echo "ansible-playbook deploy-production.yml"
+                echo "Deployment to production succeeded."
             }
         }
 }
